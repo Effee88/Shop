@@ -34,7 +34,8 @@ public class SecurityConfig{
                 // c помощью permitAll указываем что не аутентифицированные пользователи могут заходить на перечисленные страницы
                 // указываем что для всех остальных страниц необходимо вызывать метод authenticated(), который открывает форму аутентификации
 //                .anyRequest().authenticated()
-                .requestMatchers("/authentication", "/registration", "/error", "/resources/**", "/static/**", "/css/**", "/js/**", "/img/**").permitAll()
+                .requestMatchers("/authentication", "/registration", "/error", "/resources/**",
+                        "/static/**", "/css/**", "/js/**", "/img/**", "/product", "/product/info/{id}").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and() // указываем что дальше настраиватеся аутентификация и соединяем ее с настройкой доступа
                 .formLogin().loginPage("/authentication") // указываем какой url запрос будет отправлятся при заходе на защищенные страницы
@@ -42,7 +43,7 @@ public class SecurityConfig{
                 // Нам уже не нужно будет создавать метод в контроллере и обрабатывать данные с формы.
                 // Мы задали url, который используется по умолчанию для обработки формы аутентификации по средствам Spring Security.
                 // Spring Security будет ждать объект с формы аутентификации и затем сверять логин и пароль с данными в БД
-                .defaultSuccessUrl("/index", true)
+                .defaultSuccessUrl("/person_account", true)
                 // Указываем на какой url необходимо направить пользователя после успешной аутентификации.
                 // Вторым аргументом указывается true чтобы перенаправление шло в любом случае послу успешной аутентификации
                 .failureUrl("/authentication?error") // Указываем куда необходимо перенаправить пользователя при проваленной аутентификации.
