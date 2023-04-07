@@ -6,7 +6,7 @@
 </head>
 <body>
 <h3>Заказы</h3>
-<a href="/person_account">Вернуться назад</a>
+<a href="#" onclick="window.history.back();">Назад</a>
 <div th:each="order : ${orders}">
   <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
   <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">

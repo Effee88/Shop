@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список всех пользователей</title>
+</head>
+<body>
+<h3>Список всех пользователей</h3>
+<div th:each="person : ${users}">
+    <p th:text="'Логин: ' + ${person.getLogin()}"></p>
+    <p th:text="'Роль: ' + ${person.getRole()}"></p>
+    <form method="post" th:action="@{/update-role}">
+        <input type="hidden" name="id" th:value="${person.getId()}">
+        <select name="role">
+            <option value="ROLE_USER" th:selected="${person.getRole() == 'ROLE_USER'}">Пользователь</option>
+            <option value="ROLE_ADMIN" th:selected="${person.getRole() == 'ROLE_ADMIN'}">Администратор</option>
+        </select>
+        <button type="submit">Изменить роль</button>
+    </form>
+    <hr>
+</div>
+</body>
+</html>

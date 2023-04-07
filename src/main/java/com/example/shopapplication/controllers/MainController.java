@@ -62,12 +62,6 @@ public class MainController {
             return "/user/index";
     }
 
-    //    @GetMapping("/registration")
-//    public String registration(Model model){
-//        model.addAttribute("person", new Person());
-//        return "registration";
-//    }
-
     @GetMapping("/registration")
     public String registration(@ModelAttribute("person") Person person){
         return "registration";
@@ -211,7 +205,7 @@ public class MainController {
 
         String uuid = UUID.randomUUID().toString();
         for(Product product : productList){
-            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Оформлен);
+            Order newOrder = new Order(uuid, product, personDetails.getPerson(), 1, product.getPrice(), Status.Ожидает);
             orderRepository.save(newOrder);
             cartRepository.deleteCartByProductId(product.getId());
         }
@@ -226,4 +220,5 @@ public class MainController {
         model.addAttribute("orders", orderList);
         return "/user/orders";
     }
+
 }

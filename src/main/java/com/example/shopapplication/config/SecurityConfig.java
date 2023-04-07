@@ -47,7 +47,7 @@ public class SecurityConfig{
                 // В запрос будет передан объект error, который будет проверятся на форме и при наличии данного объекта в запросе выводится сообщение
                 // "Неправильный логин или пароль"
                 .and()
-                .logout().logoutUrl("/logout").logoutSuccessUrl("/product");
+                .logout().logoutUrl("/logout").logoutSuccessUrl("/authentication");
         return http.build();
     }
 

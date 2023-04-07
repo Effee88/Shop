@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Заказы</title>
+</head>
+<body>
+<h3>Все заказы зарегистрированые в системе</h3>
+<a href="#" onclick="window.history.back();">Назад</a>
+
+<form th:method="POST" th:action="@{/admin/orders/search}">
+  <fieldset>
+    <legend>Поиск заказа по фильтру 4 последние буквы/цифры:</legend>
+    <label for="search">Поиск по номеру заказа</label>
+    <input type="text" id="search" name="search" th:value="${searchTerm}">
+    <input type="submit" value="Найти" name="submit">
+  </fieldset>
+</form>
+  <div th:each="order : ${searchOrders}">
+    <p>Заказ №<span th:text="${order.getNumber()}"></span></p>
+    <p>Статус: <span th:text="${order.getStatus()}"></span></p>
+    <form method="get" th:action="@{/admin/order/edit/{id}(id=${order.id})}">
+      <input type="submit" value="Изменить статус">
+    </form>
+    <hr>
+  </div>
+</div>
+<div th:each="order : ${orders}">
+  <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
+  <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">
+  <p th:text="'Наименование: ' + ${order.getProduct().getTitle()}">
+  <p th:text="'Количество: ' + ${order.getCount()}">
+  <p th:text="'Цена: ' + ${order.getPrice()}">
+  <p th:text="'Дата заказа: ' + ${#temporals.format(order.getDateTime(), 'dd-MMM-yyyy')}"></p>
+  <p th:text="'Cтатус: ' + ${order.getStatus()}">
+  <hr>
+</form>
+
+</div>
+</body>
+</html>

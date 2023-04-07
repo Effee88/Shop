@@ -15,6 +15,6 @@
 <div th:each="img : ${product.getImageList()}">
   <img th:src="'/img/' + ${img.getFileName()}">
 </div>
-<a href="/person_account">Вернуться назад</a>
+<a href="#" onclick="window.history.back();">Назад</a>
 </body>
 </html>

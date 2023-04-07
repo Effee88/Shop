@@ -1,10 +1,13 @@
 package com.example.shopapplication.controllers;
-import com.example.shopapplication.models.Category;
-import com.example.shopapplication.models.Image;
-import com.example.shopapplication.models.Product;
+import com.example.shopapplication.enumm.Status;
+import com.example.shopapplication.models.*;
 import com.example.shopapplication.repositories.CategoryRepository;
+import com.example.shopapplication.repositories.OrderRepository;
+import com.example.shopapplication.repositories.PersonRepository;
+import com.example.shopapplication.repositories.ProductRepository;
 import com.example.shopapplication.services.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,25 +17,33 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Controller
 public class AdminController {
 
     private final ProductService productService;
+    private final OrderRepository orderRepository;
+    private final ProductRepository productRepository;
+    private final PersonRepository personRepository;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     private final CategoryRepository categoryRepository;
 
-    public AdminController(ProductService productService, CategoryRepository categoryRepository) {
+    public AdminController(ProductService productService, OrderRepository orderRepository, ProductRepository productRepository, PersonRepository personRepository, CategoryRepository categoryRepository) {
         this.productService = productService;
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.personRepository = personRepository;
         this.categoryRepository = categoryRepository;
     }
 
     @GetMapping("admin/product/add")
-    public String aaProduct(Model model){
+    public String addProduct(Model model){
         model.addAttribute("product", new Product());
         model.addAttribute("category", categoryRepository.findAll());
         return "product/addProduct";
@@ -150,4 +161,46 @@ public class AdminController {
         productService.updateProduct(id, product);
         return "redirect:/admin";
     }
+//==================================================
+    // Редактирование статуса заказов
+    @GetMapping("/admin/order/edit/{id}")
+    public String editOrder(Model model, @PathVariable("id") Long id) {
+    Order order = orderRepository.findById(id);
+    model.addAttribute("order", order);
+    model.addAttribute("statusList", Status.values());
+    return "admin/editOrder";
 }
+
+    @PostMapping("/admin/order/edit/{id}")
+    public String changeOrderStatus(@PathVariable Long id, @RequestParam("status") Status status) {
+        Optional<Order> optionalOrder = Optional.ofNullable(orderRepository.findById(id));
+        if (optionalOrder.isPresent()) {
+            Order order = optionalOrder.get();
+            order.setStatus(status);
+            orderRepository.save(order);
+        }
+        return "redirect:/admin/orders";
+    }
+//=================================================
+
+
+    @GetMapping("admin/orders")
+    public String orderAdmin(Model model){
+        List<Order> orderList = orderRepository.findAll();
+        model.addAttribute("orders", orderList);
+        return "admin/orders";
+    }
+    @GetMapping("admin/infoProduct")
+    public String allProductAdmin(Model model){
+        List<Product> productList = productRepository.findAll();
+        model.addAttribute("products", productList);
+        return "admin/infoProduct";
+    }
+    @GetMapping("admin/infoUsers")
+    public String allUserInfoAdmin(Model model){
+        List<Person> usersList = personRepository.findAll();
+        model.addAttribute("users", usersList);
+        return "admin/infoUsers";
+    }
+}
+

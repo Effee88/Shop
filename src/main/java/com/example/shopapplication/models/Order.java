@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "orders")
 public class Order {
+
+    @Column(name = "order_number")
+    private String orderNumber;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -107,3 +111,4 @@ public class Order {
         this.status = status;
     }
 }
+
