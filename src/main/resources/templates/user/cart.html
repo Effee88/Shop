@@ -6,6 +6,10 @@
 </head>
 <body>
 <h3>Корзина товаров</h3>
+<div style="width: 100%; border: black solid 1px; height: 25px; margin-bottom: 10px">
+<a href="/order/create">Оформить заказ</a>
+<a href="/person_account">Назад</a>
+</div>
 <div th:each="product : ${cart_product}">
     <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
     <br>
@@ -15,7 +19,5 @@
     <hr>
 </div>
 <h3 th:text="'Итоговая цена: ' + ${price}"></h3>
-<a href="/order/create">Оформить заказ</a>
-<a href="#" onclick="window.history.back();">Назад</a>
 </body>
 </html>

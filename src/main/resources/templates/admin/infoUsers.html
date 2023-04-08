@@ -6,6 +6,8 @@
 </head>
 <body>
 <h3>Список всех пользователей</h3>
+<a href="/admin">Назад</a>
+<hr>
 <div th:each="person : ${users}">
     <p th:text="'Логин: ' + ${person.getLogin()}"></p>
     <p th:text="'Роль: ' + ${person.getRole()}"></p>

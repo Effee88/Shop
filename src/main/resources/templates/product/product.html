@@ -3,8 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>Cписок товаров</title>
+  <style>
+    .header {
+      width: 100%;
+      height: 50px;
+      border: black solid 1px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+    }
+    .menu a{
+      padding-left: 20px;
+    }
+    .card{
+      border: black solid 1px;
+      width: 220px;
+      display: flex;
+      flex-direction: column;
+      margin: 10px;
+    }
+    .allcards{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+  </style>
 </head>
 <body>
+<div class="header">
+  <div class="logo"></div>
+  <a href="/product">Главная</a>
+<div class="menu">
+  <a href="/authentication">Авторизация</a>
+  <a href="/registration">Регистрация</a>
+</div>
+</div>
 <h3>Cортировка, поиск, фильтрация</h3>
 <form th:method="POST" th:action="@{/product/search}">
   <fieldset>
@@ -45,19 +79,19 @@
   <br>
   <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
   <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
   <hr>
 </div>
 <hr>
 <h3>Доступные товары: </h3>
-<div th:each="product : ${products}">
+<div class="allcards">
+<div class="card" th:each="product : ${products}">
   <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="200px">
   <br>
   <a th:href="@{/product/info/{id}(id=${product.getId()})}"
      th:text="${product.getTitle()}"></a>
   <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <a th:href="@{/cart/add/{id}(id=${product.getId()})}">Добавить товар в корзину</a>
   <hr>
+</div>
 </div>
 </body>
 </html>
