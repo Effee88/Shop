@@ -32,7 +32,7 @@ public class SecurityConfig{
                 // указываем что для всех остальных страниц необходимо вызывать метод authenticated(), который открывает форму аутентификации
 //                .anyRequest().authenticated()
                 .requestMatchers("/authentication", "/registration", "/error", "/resources/**",
-                        "/static/**", "/css/**", "/js/**", "/img/**", "/product", "/product/info/{id}", "/product/search").permitAll()
+                        "/static/**", "/css/**", "/js/**", "/img/**","/images/**", "/product", "/product/info/{id}", "/product/search").permitAll()
                 .anyRequest().hasAnyRole("USER", "ADMIN")
                 .and() // указываем что дальше настраиватеся аутентификация и соединяем ее с настройкой доступа
                 .formLogin().loginPage("/authentication") // указываем какой url запрос будет отправлятся при заходе на защищенные страницы
@@ -56,11 +56,8 @@ public class SecurityConfig{
         this.personDetailsService = personDetailsService;
     }
 
-
-
     protected void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(personDetailsService)
                 .passwordEncoder(getPasswordEncode());
     }
-
 }

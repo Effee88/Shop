@@ -3,95 +3,189 @@
 <head>
   <meta charset="UTF-8">
   <title>Cписок товаров</title>
-  <style>
-    .header {
-      width: 100%;
-      height: 50px;
-      border: black solid 1px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    }
-    .menu a{
-      padding-left: 20px;
-    }
-    .card{
-      border: black solid 1px;
-      width: 220px;
-      display: flex;
-      flex-direction: column;
-      margin: 10px;
-    }
-    .allcards{
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: flex-start;
-    }
-  </style>
+  <link th:href="@{/css/product.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/card.css}" type="text/css" rel="stylesheet">
+  <link th:href="@{/css/search.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+<div class="top-header">
+<ul>
+  <li class="first"><a href="https://example.com/about-us">О нас</a></li>
+  <li><a href="https://example.com/delivery">Доставка</a></li>
+  <li><a href="tel:123-456-7890">Телефон</a></li>
+  <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
+</ul>
+</div>
 <div class="header">
-  <div class="logo"></div>
-  <a href="/product">Главная</a>
-<div class="menu">
-  <a href="/authentication">Авторизация</a>
-  <a href="/registration">Регистрация</a>
-</div>
-</div>
-<h3>Cортировка, поиск, фильтрация</h3>
-<form th:method="POST" th:action="@{/product/search}">
-  <fieldset>
-    <legend>Выберите параметры для сортировки, поиска, фильтрации:</legend>
-    <label for="search">Поиск по наименованию</label>
-    <input type="text" id="search" name="search" th:value="*{value_search}">
-    <br>
-    <p>Цена, P</p>
-    <label for="ot">От</label>
-    <input type="text" name="ot" id="ot" th:value="*{value_price_ot}">
-    <label for="do">До</label>
-    <input type="text" name="do" id="do" th:value="*{value_price_do}">
-    <br>
-    <br>
-    <div>
-      <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
-      <label for="ascending_price">Отсортировать по возрастанию цены</label>
-      <input type="radio" id="descending_price" name="price"
-             value="sorted_by_descending_price">
-      <label for="descending_price">Отсортировать по убыванию цены</label>
-      <p>Категория товаров: </p>
-      <input type="radio" id="furniture" name="contract" value="furniture">
-      <label for="furniture">Мебель</label>
-      <input type="radio" id="appliances" name="contract" value="appliances">
-      <label for="appliances">Бытовая техника</label>
-      <input type="radio" id="clothes" name="contract" value="clothes">
-      <label for="clothes">Одежда</label>
-      <br>
-      <br>
-      <input type="submit" value="Найти">
+  <div class="left-menu">
+    <div >
+      <img class="logo" th:src="@{/images/logo.png}">
     </div>
-  </fieldset>
-</form>
-<hr>
+    <button class="header-button">
+      <a href="/product">Каталог</a>
+    </button>
+
+  </div>
+  <div class="right-menu">
+    <a href="/authentication">Авторизация</a>
+    <a href="/registration">Регистрация</a>
+  </div>
+</div>
+<div class="sale">
+  <img th:src="@{/images/sale.jpg}">
+</div>
+  <!--Поиск-------------------------------------->
+  <div class="form-search">
+    <form th:method="POST" th:action="@{/product/search}">
+      <fieldset>
+        <legend>Выберите параметры для сортировки, поиска, фильтрации:</legend>
+          <label for="search"></label>
+          <div class="search-all">
+          <div class="search-panel">
+            <p>Поиск по названию:</p>
+              <input class = "input-form" type="text" id="search" name="search" th:value="*{value_search}">
+        </div>
+        <p>Цена, P</p>
+            <div class="ot-do">
+        <label for="ot"><span style="margin-right: 10px;">От</span></label>
+        <input class = "input-form-ot" type="text" name="ot" id="ot" th:value="*{value_price_ot}">
+        <label for="do"><span style="margin-right: 10px; margin-left: 10px;">До</span></label>
+        <input class = "input-form-ot" type="text" name="do" id="do" th:value="*{value_price_do}">
+            </div>
+        <div class="search-footer">
+          <input type="radio" id="ascending_price" name="price" value="sorted_by_ascending_price">
+          <label for="ascending_price">Отсортировать по возрастанию цены</label>
+          <input type="radio" id="descending_price" name="price"
+                 value="sorted_by_descending_price">
+          <label for="descending_price">Отсортировать по убыванию цены</label>
+          <p>Категория товаров: </p>
+          <input type="radio" id="furniture" name="contract" value="furniture">
+          <label for="furniture">Мебель</label>
+          <input type="radio" id="appliances" name="contract" value="appliances">
+          <label for="appliances">Бытовая техника</label>
+          <input type="radio" id="clothes" name="contract" value="clothes">
+          <label for="clothes">Одежда</label>
+          <br>
+          <br>
+          <input class="search-btn" type="submit" value="Найти">
+        </div>
+        </div>
+      </fieldset>
+    </form>
+    <div class="form-img">
+      <img th:src="@{/images/letu.jpg}" alt="">
+    </div>
+  </div>
+<!--Результат поиска-->
+  <!--Карточки поиска-->
 <h3>Результат поиска, cортировки, фильтрации</h3>
-<div th:each="product : ${search_product}">
-  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
+  <div class="cards-search">
+    <div class="shell" th:each="product : ${search_product}">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="wsk-cp-product">
+              <div class="wsk-cp-img">
+                <img th:src="'/img/' + ${product.imageList[0].getFileName()}" alt="Product" class="img-responsive" />
+              </div>
+              <div class="wsk-cp-text">
+                <div class="category">
+                  <span><a class="wsk-cp-text-a" th:href="@{/product/info/{id}(id=${product.getId()})}">Инфо</a></span>
+                </div>
+                <div class="title-product">
+                  <h3></h3>
+                </div>
+                <div class="description-prod">
+                  <a class="wsk-cp-text-a" th:href="@{/product/info/{id}(id=${product.getId()})}"
+                     th:text="${product.getTitle()}">
+                  </a>
+                </div>
+                <div class="card-footer">
+                  <div class="wcf-left"><span class="price" th:text="'Р ' + ${product.getPrice()}"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <br>
-  <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
-  <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <hr>
+<!--<div th:each="product : ${search_product}">-->
+<!--  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">-->
+<!--  <br>-->
+<!--  <a th:href="@{/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>-->
+<!--  <p th:text="'Цена: ' + ${product.getPrice()}"></p>-->
+<!--  <hr>-->
+<!--</div>-->
+<!--  &lt;!&ndash;Карточки&ndash;&gt;-->
+<!--<h3>Доступные товары: </h3>-->
+<!--<div class="allcards">-->
+<!--<div class="card" th:each="product : ${products}">-->
+<!--  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="200px">-->
+<!--  <br>-->
+<!--  <p th:text="'Цена: ' + ${product.getPrice()}"></p>-->
+<!--  <a th:href="@{/product/info/{id}(id=${product.getId()})}"-->
+<!--     th:text="${product.getTitle()}"></a>-->
+<!--  <hr>-->
+<!--</div>-->
+<!--</div>-->
+  <!--Карточки-->
+  <!--Карточки основные-->
+  <h3 style="margin-top: 0;">Все товары</h3>
+  <div class="cards">
+    <div class="shell" th:each="product : ${products}">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="wsk-cp-product">
+              <div class="wsk-cp-img">
+                <img th:src="'/img/' + ${product.imageList[0].getFileName()}" alt="Product" class="img-responsive" />
+              </div>
+              <div class="wsk-cp-text">
+                <div class="category">
+                  <span><a class="wsk-cp-text-a" th:href="@{/product/info/{id}(id=${product.getId()})}">Инфо</a></span>
+                </div>
+                <div class="title-product">
+                  <h3></h3>
+                </div>
+                <div class="description-prod">
+                  <a class="wsk-cp-text-a" th:href="@{/product/info/{id}(id=${product.getId()})}"
+                     th:text="${product.getTitle()}">
+                  </a>
+                </div>
+                <div class="card-footer">
+                  <div class="wcf-left"><span class="price" th:text="'Р ' + ${product.getPrice()}"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!--Footer-->
+<footer>
+  <div class="footerbox">
+<div class="footer-menu">
+  <div>
+    <img class="logofooter" th:src="@{/images/logofooter.png}">
+  </div>
+  <div class="right-menu-footer">
+    <ul>
+      <li><a href="https://example.com/about-us">О нас</a></li>
+      <li><a href="https://example.com/delivery">Доставка</a></li>
+      <li><a href="tel:123-456-7890">8-800-800-80-80</a></li>
+      <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
+    </ul>
+  </div>
 </div>
-<hr>
-<h3>Доступные товары: </h3>
-<div class="allcards">
-<div class="card" th:each="product : ${products}">
-  <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="200px">
-  <br>
-  <a th:href="@{/product/info/{id}(id=${product.getId()})}"
-     th:text="${product.getTitle()}"></a>
-  <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-  <hr>
-</div>
-</div>
+    <div class="info">
+      2022-2023 Филиппович Станислав Николаевич | Fullstack - разработка на языке Java FSJ-3-22
+    </div>
+  </div>
+</footer>
 </body>
 </html>
