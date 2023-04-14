@@ -31,4 +31,8 @@ public class PersonService {
         person.setRole("ROLE_USER");
         personRepository.save(person);
     }
+    @Transactional
+    public void deleteUser(int id){
+        personRepository.deleteById(id);
+    }
 }

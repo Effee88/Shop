@@ -5,6 +5,7 @@ import com.example.shopapplication.repositories.CategoryRepository;
 import com.example.shopapplication.repositories.OrderRepository;
 import com.example.shopapplication.repositories.PersonRepository;
 import com.example.shopapplication.repositories.ProductRepository;
+import com.example.shopapplication.services.PersonService;
 import com.example.shopapplication.services.ProductService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,17 +28,19 @@ public class AdminController {
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
     private final PersonRepository personRepository;
+    private final PersonService personService;
 
     @Value("${upload.path}")
     private String uploadPath;
 
     private final CategoryRepository categoryRepository;
 
-    public AdminController(ProductService productService, OrderRepository orderRepository, ProductRepository productRepository, PersonRepository personRepository, CategoryRepository categoryRepository) {
+    public AdminController(ProductService productService, OrderRepository orderRepository, ProductRepository productRepository, PersonRepository personRepository, PersonService personService, CategoryRepository categoryRepository) {
         this.productService = productService;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.personRepository = personRepository;
+        this.personService = personService;
         this.categoryRepository = categoryRepository;
     }
 
@@ -144,7 +147,14 @@ public class AdminController {
         productService.deleteProduct(id);
         return "redirect:/admin";
     }
-
+//==================================
+    //Удаление пользователя
+    @GetMapping("admin/infoUsers/delete/{id}")
+    public String deleteUser(@PathVariable("id") int id){
+        personService.deleteUser(id);
+        return "redirect:/admin/infoUsers";
+    }
+//=============================================
     @GetMapping("admin/product/edit/{id}")
     public String editProduct(Model model, @PathVariable("id")int id){
         model.addAttribute("product", productService.getProductId(id));

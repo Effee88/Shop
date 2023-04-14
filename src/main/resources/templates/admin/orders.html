@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Заказы</title>
+  <link th:href="@{/css/footer.css}" type="text/css" rel="stylesheet">
 </head>
 <body>
 <h3>Все заказы зарегистрированые в системе</h3>
@@ -28,7 +29,6 @@
 </div>
 <div th:each="order : ${orders}">
   <h3 th:text="'Заказ №' + ${order.getNumber()}"></h3>
-  <img th:src="'/img/' + ${order.getProduct().getImageList()[0].getFileName()}" width="300px">
   <p th:text="'Наименование: ' + ${order.getProduct().getTitle()}">
   <p th:text="'Количество: ' + ${order.getCount()}">
   <p th:text="'Цена: ' + ${order.getPrice()}">

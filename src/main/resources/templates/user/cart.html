@@ -1,23 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
+<link th:href="@{/css/backet.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/userIndex.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/product.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/footer.css}" type="text/css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <title>Корзина</title>
 </head>
 <body>
-<h3>Корзина товаров</h3>
-<div style="width: 100%; border: black solid 1px; height: 25px; margin-bottom: 10px">
-<a href="/order/create">Оформить заказ</a>
-<a href="/person_account">Назад</a>
+<div class="container">
+    <div class="header" style="margin-top: 20px;">
+        <div class="left-menu">
+            <div >
+                <a href="/person_account">
+                    <img class="logo" th:src="@{/images/logo.png}">
+                </a>
+            </div>
+            <button class="header-button">
+                <a href="/person_account">Каталог</a>
+            </button>
+
+        </div>
+        <div class="right-menu">
+            <p>Добро пожаловать, <span th:text="${#authentication.principal.username}"></span>!</p>
+        </div>
+    </div>
+    <div class="header-menu">
+        <div class="userMenu">
+            <form method="post" th:action="@{/logout}">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                <button class="logbutton" type="submit">Выйти</button>
+            </form>
+            <form method="get" th:action="@{/orders}">
+                <button type="submit" >Заказы</button>
+            </form>
+        </div>
+    </div>
+    <hr>
+<h3>Корзина товаров:</h3>
+<div>
+    <button class="header-button">
+        <a href="/order/create" type="button">Оформить</a>
+    </button>
+    <button class="header-button">
+        <a href="/person_account" type="button">Назад</a>
+    </button>
 </div>
-<div th:each="product : ${cart_product}">
-    <img th:src="'/img/' + ${product.imageList[0].getFileName()}" width="300px">
-    <br>
+    <div class="total"><h3 th:text="'Итоговая цена: ' + ${price}"></h3></div>
+<div class="cart-info">
+<div class="cart" th:each="product : ${cart_product}">
+    <div>
+    <img th:src="'/img/' + ${product.imageList[0].getFileName()}">
+    </div>
+    <div style="margin-left: 60px">
     <a th:href="@{/person_account/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
     <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
-    <hr>
+    </div>
 </div>
-<h3 th:text="'Итоговая цена: ' + ${price}"></h3>
+</div>
+</div>
+<footer>
+    <div class="footerbox">
+        <div class="footer-menu">
+            <div>
+                <img class="logofooter" th:src="@{/images/logofooter.png}">
+            </div>
+            <div class="right-menu-footer">
+                <ul>
+                    <li><a href="https://example.com/about-us">О нас</a></li>
+                    <li><a href="https://example.com/delivery">Доставка</a></li>
+                    <li><a href="tel:123-456-7890">8-800-800-80-80</a></li>
+                    <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="info">
+            2022-2023 Филиппович Станислав Николаевич | Fullstack - разработка на языке Java FSJ-3-22
+        </div>
+    </div>
+</footer>
 </body>
 </html>

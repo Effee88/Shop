@@ -3,8 +3,8 @@ body {
     font-family: "Muli", sans-serif;
 }
 .shell {
-    width: 219px;
-    margin: 10px;
+    width: 250px;
+    margin-left: 40px;
 }
 .cards{
     display: flex;
@@ -44,7 +44,7 @@ body {
     width: 100%;
     transition: all 0.2s ease-in-out;
     border-radius: 6px;
-    height: 285px;
+    height: 335px;
 }
 .wsk-cp-product:hover .wsk-cp-img {
     top: -40px;

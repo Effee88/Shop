@@ -2,6 +2,7 @@ package com.example.shopapplication.services;
 
 import com.example.shopapplication.models.Category;
 import com.example.shopapplication.models.Product;
+import com.example.shopapplication.repositories.PersonRepository;
 import com.example.shopapplication.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,9 +14,11 @@ import java.util.Optional;
 @Transactional(readOnly = true)
 public class ProductService {
     private final ProductRepository productRepository;
+    private final PersonRepository personRepository;
 
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, PersonRepository personRepository) {
         this.productRepository = productRepository;
+        this.personRepository = personRepository;
     }
 
     // Данный метод позволяет получить список всех товаров
