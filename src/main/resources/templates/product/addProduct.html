@@ -7,12 +7,15 @@
     <link th:href="@{/css/userIndex.css}" type="text/css" rel="stylesheet">
     <link th:href="@{/css/product.css}" type="text/css" rel="stylesheet">
     <link th:href="@{/css/footer.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="header" style="margin-top: 20px;">
         <div class="left-menu">
             <div >
+                <a>
                 <img class="logo" th:src="@{/images/logo.png}">
                 </a>
             </div>
@@ -21,77 +24,131 @@
             <p>Добро пожаловать, <span th:text="${#authentication.principal.username}"></span>!</p>
         </div>
     </div>
-    <div class="header-menu">
-        <div class="userMenu">
+        <div style="display: flex; justify-content: flex-end;">
             <form method="post" th:action="@{/logout}">
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <button class="logbutton" type="submit">Выйти</button>
+                <button type="submit" class="btn btn-outline-success">Выйти</button>
             </form>
         </div>
-    </div>
     <hr>
-<h3>Добавление товара</h3>
-    <button class="header-button">
-        <a href="/admin" type="button">Меню</a>
-    </button>
-<form class="info-box" th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
-    <label for="title">Введите наименование товара: </label>
-    <input type="text" th:field="*{title}" placeholder="Наименование" id="title">
-    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
+    <h3>Добавление товара</h3>
+    <a style="margin-top: 10px;" href="/admin" class="btn btn-primary" role="button" aria-disabled="true">Меню</a>
     <br>
-    <br>
-    <label for="description">Введите описание товара: </label>
-    <textarea th:field="*{description}" placeholder="Описание" id="description"></textarea>
-    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
-    <br>
-    <br>
-    <label for="price">Введите цену товара: </label>
-    <input type="number" th:field="*{price}" min="1" step="0.00" placeholder="Цена" id="price">
-    <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
-    <br>
-    <br>
-    <label for="warehouse">Введите cклад, на котором расположен товар: </label>
-    <input type="text" th:field="*{warehouse}" placeholder="Cклад" id="warehouse">
-    <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
-    <br>
-    <br>
-    <label for="category">Выберите категорию товара: </label>
-    <select name="category" th:field="*{category}" id="category">
+<!--   hr ================================================-->
+    <form th:method="POST" th:action="@{/admin/product/add}" th:object="${product}" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label style="margin-top: 10px;" for="title" class="form-label">Название товара:</label>
+        <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="Название товара">
+    </div>
+    <div class="mb-3">
+        <label for="description" class="form-label">Описание товара</label>
+        <textarea th:field="*{description}" class="form-control" id="description" rows="3"></textarea>
+        <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+    </div>
+        <label for="category">Выберите категорию товара: </label>
+    <select class="form-select" aria-label="Default select example" name="category" th:field="*{category}" id="category">
         <div th:each="element : ${category}">
-            <option th:text="${element.getName()}" th:value="${element.getId()}">
-        </div>
+        <option th:text="${element.getName()}" th:value="${element.getId()}">Open this select menu</option>
+            </div>
     </select>
-    <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
-    <br>
-    <br>
-    <label for="seller">Введите данные о продавце: </label>
-    <textarea th:field="*{seller}" placeholder="Продавец" id="seller"></textarea>
-    <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
-    <br>
-    <br>
-    <p style="color: red">Вы можете добавить до 5 фотографий. Первая фотография не может быть пустой т.к они будет являтся главной при выводе карточки товара</p>
-    <input type="file" name="file_one">
-    <input type="file" name="file_two">
-    <input type="file" name="file_three">
-    <input type="file" name="file_four">
-    <input type="file" name="file_five">
-    <br>
-    <br>
-    <input class="header-button" style="color: white" type="submit" value="Добавить">
-</form>
+        <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+        <div class="mb-3">
+            <label style="margin-top: 10px;" for="price" class="form-label">Введите цену товара:</label>
+            <input type="number" th:field="*{price}" class="form-control" id="price" min="1" step="0.00" placeholder="Цена">
+            <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="warehouse" class="form-label">Введите cклад, на котором расположен товар: </label>
+            <input type="text" th:field="*{warehouse}" class="form-control" id="warehouse" placeholder="Склад">
+            <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>
+        </div>
+        <div class="mb-3">
+            <label for="seller" class="form-label">Введите данные о продавце: </label>
+            <input type="text" th:field="*{seller}" class="form-control" id="seller" placeholder="Продавец">
+            <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>
+        </div>
+        <p style="color: red">Вы можете добавить до 5 фотографий. Первая фотография не может быть пустой т.к они будет являтся главной при выводе карточки товара</p>
+        <div class="input-group">
+            <input type="file" class="form-control" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" aria-label="Upload" name="file_one">
+        </div>
+        <br>
+        <div class="input-group">
+            <input type="file" class="form-control" id="inputGroupFile02" aria-describedby="inputGroupFileAddon02" aria-label="Upload" name="file_two">
+        </div>
+        <br>
+        <div class="input-group">
+            <input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" name="file_three">
+        </div>
+        <br>
+        <div class="input-group">
+            <input type="file" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload" name="file_four">
+        </div>
+        <br>
+        <div class="input-group">
+            <input type="file" class="form-control" id="inputGroupFile05" aria-describedby="inputGroupFileAddon05" aria-label="Upload" name="file_five">
+        </div>
+        <br>
+        <input class="btn btn-primary" type="submit" value="Добавить">
+    </form>
+    <!--   hr ================================================-->
+<!--    <label for="title">Введите наименование товара: </label>-->
+<!--    <input type="text" th:field="*{title}" placeholder="Наименование" id="">-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label for="description">Введите описание товара: </label>-->
+<!--    <textarea th:field="*{description}" placeholder="Описание" id=""></textarea>-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label for="price">Введите цену товара: </label>-->
+<!--    <input type="number" th:field="*{price}" min="1" step="0.00" placeholder="Цена" id="price">-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label for="warehouse">Введите cклад, на котором расположен товар: </label>-->
+<!--    <input type="text" th:field="*{warehouse}" placeholder="Cклад" id="warehouse">-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('warehouse')}" th:errors="*{warehouse}"></div>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label for="category">Выберите категорию товара: </label>-->
+<!--    <select name="category" th:field="*{category}" id="">-->
+<!--        <div th:each="element : ${category}">-->
+<!--            <option th:text="${element.getName()}" th:value="${element.getId()}">-->
+<!--        </div>-->
+<!--    </select>-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <label for="seller">Введите данные о продавце: </label>-->
+<!--    <textarea th:field="*{seller}" placeholder="Продавец" id="seller"></textarea>-->
+<!--    <div style="color: red" th:if="${#fields.hasErrors('seller')}" th:errors="*{seller}"></div>-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <p style="color: red">Вы можете добавить до 5 фотографий. Первая фотография не может быть пустой т.к они будет являтся главной при выводе карточки товара</p>-->
+<!--    <input type="file" name="file_one">-->
+<!--    <input type="file" name="file_two">-->
+<!--    <input type="file" name="file_three">-->
+<!--    <input type="file" name="file_four">-->
+<!--    <input type="file" name="file_five">-->
+<!--    <br>-->
+<!--    <br>-->
+<!--    <input class="header-button" style="color: white" type="submit" value="Добавить">-->
+<!--</form>-->
+<!--</div>-->
 </div>
-<footer>
-<div class="footerbox">
+<footer style="position: relative;">
+<div class="footerbox" style="margin-top: 50px;">
     <div class="footer-menu">
         <div>
             <img class="logofooter" th:src="@{/images/logofooter.png}">
         </div>
         <div class="right-menu-footer">
             <ul>
-                <li><a href="https://example.com/about-us">О нас</a></li>
-                <li><a href="https://example.com/delivery">Доставка</a></li>
-                <li><a href="tel:123-456-7890">8-800-800-80-80</a></li>
-                <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
+                <li><a href="#">О нас</a></li>
+                <li><a href="#">Доставка</a></li>
+                <li><a href="#">8-800-800-80-80</a></li>
+                <li><a href="#">Мобильное приложение</a></li>
             </ul>
         </div>
     </div>

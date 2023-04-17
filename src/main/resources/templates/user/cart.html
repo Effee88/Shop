@@ -4,12 +4,45 @@
 <link th:href="@{/css/userIndex.css}" type="text/css" rel="stylesheet">
 <link th:href="@{/css/product.css}" type="text/css" rel="stylesheet">
 <link th:href="@{/css/footer.css}" type="text/css" rel="stylesheet">
+<link th:href="@{/css/card.css}" type="text/css" rel="stylesheet">
+<link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+<script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    html,
+    body {
+        height: 100%;
+    }
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 830px;
+        width: 1200px;
+        margin: 0   auto;
+    }
+    .content {
+        flex: 1 0 auto;
+    }
+    .footer {
+        flex: 0 0 auto;
+    }
+    h5{
+        margin-top: 10px;
+        margin-bottom: 1rem;
+    }
+    a{
+        text-decoration: none;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Корзина</title>
 </head>
 <body>
-<div class="container">
+<div class="wrapper">
     <div class="header" style="margin-top: 20px;">
         <div class="left-menu">
             <div >
@@ -18,7 +51,7 @@
                 </a>
             </div>
             <button class="header-button">
-                <a href="/person_account">Каталог</a>
+                <a style="color: white" href="/person_account">Каталог</a>
             </button>
 
         </div>
@@ -38,17 +71,17 @@
         </div>
     </div>
     <hr>
-<h3>Корзина товаров:</h3>
+<h5>Корзина товаров:</h5>
 <div>
     <button class="header-button">
-        <a href="/order/create" type="button">Оформить</a>
+        <a style="color: white" href="/order/create" type="button">Оформить</a>
     </button>
     <button class="header-button">
-        <a href="/person_account" type="button">Назад</a>
+        <a style="color: white" href="/person_account" type="button">Назад</a>
     </button>
 </div>
-    <div class="total"><h3 th:text="'Итоговая цена: ' + ${price}"></h3></div>
-<div class="cart-info">
+    <div class="total"><h5 th:text="'Итоговая цена: ' + ${price}"></h5></div>
+<div class="content" style="margin-bottom: 50px;">
 <div class="cart" th:each="product : ${cart_product}">
     <div>
     <img th:src="'/img/' + ${product.imageList[0].getFileName()}">
@@ -56,30 +89,34 @@
     <div style="margin-left: 60px">
     <a th:href="@{/person_account/product/info/{id}(id=${product.getId()})}" th:text="${product.getTitle()}"></a>
     <p th:text="'Цена: ' + ${product.getPrice()}"></p>
-    <a th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
+        <button type="button" class="btn btn-danger">
+    <a style="color: white" th:href="@{/cart/delete/{id}(id=${product.getId()})}">Удалить</a>
+        </button>
     </div>
 </div>
 </div>
 </div>
-<footer>
-    <div class="footerbox">
-        <div class="footer-menu">
-            <div>
-                <img class="logofooter" th:src="@{/images/logofooter.png}">
+<div class="footer">
+    <footer>
+        <div class="footerbox">
+            <div class="footer-menu">
+                <div>
+                    <img class="logofooter" th:src="@{/images/logofooter.png}">
+                </div>
+                <div class="right-menu-footer">
+                    <ul>
+                        <li><a href="#">О нас</a></li>
+                        <li><a href="#">Доставка</a></li>
+                        <li><a href="#">8-800-800-80-80</a></li>
+                        <li><a href="#">Мобильное приложение</a></li>
+                    </ul>
+                </div>
             </div>
-            <div class="right-menu-footer">
-                <ul>
-                    <li><a href="https://example.com/about-us">О нас</a></li>
-                    <li><a href="https://example.com/delivery">Доставка</a></li>
-                    <li><a href="tel:123-456-7890">8-800-800-80-80</a></li>
-                    <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
-                </ul>
+            <div class="info">
+                2022-2023 Филиппович Станислав Николаевич | Fullstack - разработка на языке Java FSJ-3-22
             </div>
         </div>
-        <div class="info">
-            2022-2023 Филиппович Станислав Николаевич | Fullstack - разработка на языке Java FSJ-3-22
-        </div>
-    </div>
-</footer>
+    </footer>
+</div>
 </body>
 </html>

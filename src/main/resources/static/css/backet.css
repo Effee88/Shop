@@ -5,7 +5,6 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    height: 80vh;
 }
 .cart-info{
     margin: 0 auto;

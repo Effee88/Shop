@@ -143,3 +143,22 @@ padding: 10px;
     background-color: #e33151;
     cursor: pointer;
 }
+.header-button-status{
+    background-color: green;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    line-height: 20px;
+    min-height: 40px;
+    min-width: 120px;
+    padding: 0 12px;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+}
+.header-button-status a {
+    color: #fff;
+    text-decoration: none;
+}
+.header-button-status:hover {
+    background-color: #318031;
+    cursor: pointer;
+}

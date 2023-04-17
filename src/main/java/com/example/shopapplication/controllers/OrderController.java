@@ -1,4 +1,5 @@
 package com.example.shopapplication.controllers;
+import com.example.shopapplication.enumm.Status;
 import com.example.shopapplication.models.Order;
 import com.example.shopapplication.repositories.OrderRepository;
 import com.example.shopapplication.services.OrderService;
@@ -44,6 +45,7 @@ public class OrderController {
             List<Order> orders = orderRepository.findByLastFourDigitsOfOrderNumber(searchTerm);
             model.addAttribute("searchTerm", searchTerm);
             model.addAttribute("searchOrders", orders);
+            model.addAttribute("statusList", Status.values());
             return "/admin/orders";
         }
 

@@ -7,13 +7,56 @@
     <link th:href="@{/css/userIndex.css}" type="text/css" rel="stylesheet">
     <link th:href="@{/css/product.css}" type="text/css" rel="stylesheet">
     <link th:href="@{/css/footer.css}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html,
+        body {
+            height: 100%;
+        }
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            min-height: 830px;
+            width: 1200px;
+            margin: 0   auto;
+            align-items: flex-start;
+        }
+        .content {
+            flex: 1 0 auto;
+            width: 100%;
+        }
+        .footer {
+            flex: 0 0 auto;
+        }
+        p{
+            margin-top: 10px;
+            margin-bottom: 1rem;
+        }
+        a{
+            text-decoration: none;
+        }
+        hr{
+            margin-top: 20px;
+        }
+        hr{
+            width: 1200px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
-<div class="container">
+<div class="wrapper">
     <div class="header" style="margin-top: 20px;">
         <div class="left-menu">
             <div >
-                <img class="logo" th:src="@{/images/logo.png}">
+                <a>
+                    <img class="logo" th:src="@{/images/logo.png}">
                 </a>
             </div>
         </div>
@@ -21,35 +64,36 @@
             <p>Добро пожаловать, <span th:text="${#authentication.principal.username}"></span>!</p>
         </div>
     </div>
-    <div class="header-menu">
-        <div class="userMenu">
-            <form method="post" th:action="@{/logout}">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-                <button class="logbutton" type="submit">Выйти</button>
-            </form>
-        </div>
+    <div style="display: flex; justify-content: flex-end; width: 100%;">
+        <form method="post" th:action="@{/logout}">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit" class="btn btn-outline-success">Выйти</button>
+        </form>
     </div>
     <hr>
 <h3>Список всех пользователей:</h3>
-    <button class="header-button">
-        <a href="/admin" type="button">Меню</a>
-    </button>
-<div style="display: flex; padding: 10px; align-items: center; justify-content: flex-start" class="info-box" th:each="person : ${users}">
+    <a style="margin-top: 10px;" href="/admin" class="btn btn-primary" role="button" aria-disabled="true">Меню</a>
+    <div class="content">
+<div style="display: flex; padding: 10px; align-items: center; justify-content: flex-start; margin-top: 20px;" class="info-box" th:each="person : ${users}">
     <p style="margin: 0 10px; width: 120px;" th:text="'Логин: ' + ${person.getLogin()}"></p>
-    <span><p style="margin: 0 10px; width: 140px; font-weight: bold" th:text="'Роль: ' + ${person.getRole()}"></p></span>
-    <form  style="margin: 0 10px;" method="post" th:action="@{/update-role}">
+    <span><p style="margin: 0 10px; width: 160px; font-weight: bold" th:text="'Роль: ' + ${person.getRole()}"></p></span>
+    <form   style="margin: 0 10px; display: flex" method="post" th:action="@{/update-role}">
+        <div>
         <input type="hidden" name="id" th:value="${person.getId()}">
-        <select style="border-radius: 10px; width: 130px; height: 30px; padding-left: 10px;" name="role">
+        <select class="form-select" aria-label="Default select example" name="role">
             <option value="ROLE_USER" th:selected="${person.getRole() == 'ROLE_USER'}">Пользователь</option>
             <option value="ROLE_ADMIN" th:selected="${person.getRole() == 'ROLE_ADMIN'}">Администратор</option>
         </select>
-        <button style="color: white; margin-left: 10px; font-size: 14px; min-height: 30px;" class="header-button" type="submit">Изменить роль</button>
-        <button class="header-button-delete" style="color: white; margin-left: 10px; font-size: 14px; min-height: 30px;">
-            <a th:href="@{/admin/infoUsers/delete/{id}(id=${person.getId()})}">Удаление пользователя</a>
+        </div>
+        <button style="margin-left: 10px" class="btn btn-primary" type="submit">Изменить роль</button>
+        <button style="margin-left: 10px" type="button" class="btn btn-danger">
+            <a style="color: white; text-decoration: none" th:href="@{/admin/infoUsers/delete/{id}(id=${person.getId()})}">Удаление пользователя</a>
         </button>
     </form>
 </div>
 </div>
+</div>
+<div class="footer">
 <footer>
     <div class="footerbox">
         <div class="footer-menu">
@@ -57,11 +101,11 @@
                 <img class="logofooter" th:src="@{/images/logofooter.png}">
             </div>
             <div class="right-menu-footer">
-                <ul>
-                    <li><a href="https://example.com/about-us">О нас</a></li>
-                    <li><a href="https://example.com/delivery">Доставка</a></li>
-                    <li><a href="tel:123-456-7890">8-800-800-80-80</a></li>
-                    <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
+                <ul style="margin-bottom: 0;">
+                 <li><a href="#">О нас</a></li>
+                <li><a href="#">Доставка</a></li>
+                <li><a href="#">8-800-800-80-80</a></li>
+                <li><a href="#">Мобильное приложение</a></li>
                 </ul>
             </div>
         </div>
@@ -70,5 +114,6 @@
         </div>
     </div>
 </footer>
+</div>
 </body>
 </html>

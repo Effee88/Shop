@@ -179,7 +179,6 @@ public class AdminController {
     model.addAttribute("statusList", Status.values());
     return "admin/editOrder";
 }
-
     @PostMapping("/admin/order/edit/{id}")
     public String changeOrderStatus(@PathVariable Long id, @RequestParam("status") Status status) {
         Optional<Order> optionalOrder = Optional.ofNullable(orderRepository.findById(id));
@@ -190,6 +189,7 @@ public class AdminController {
         }
         return "redirect:/admin/orders";
     }
+
 //=================================================
 
 
@@ -197,6 +197,7 @@ public class AdminController {
     public String orderAdmin(Model model){
         List<Order> orderList = orderRepository.findAll();
         model.addAttribute("orders", orderList);
+        model.addAttribute("statusList", Status.values());
         return "admin/orders";
     }
     @GetMapping("admin/infoProduct")

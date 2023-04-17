@@ -7,12 +7,15 @@
   <link th:href="@{/css/product.css}" type="text/css" rel="stylesheet">
   <link th:href="@{/css/footer.css}" type="text/css" rel="stylesheet">
   <link th:href="@{/css/adminIndex.css}" type="text/css" rel="stylesheet">
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
   <div class="header" style="margin-top: 20px;">
     <div class="left-menu">
       <div >
+        <a>
           <img class="logo" th:src="@{/images/logo.png}">
         </a>
       </div>
@@ -21,46 +24,44 @@
       <p>Добро пожаловать, <span th:text="${#authentication.principal.username}"></span>!</p>
     </div>
   </div>
-  <div class="header-menu">
-    <div class="userMenu">
-      <form method="post" th:action="@{/logout}">
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-        <button class="logbutton" type="submit">Выйти</button>
-      </form>
-    </div>
+  <div style="display: flex; justify-content: flex-end;">
+    <form method="post" th:action="@{/logout}">
+      <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+      <button type="submit" class="btn btn-outline-success">Выйти</button>
+    </form>
   </div>
   <hr>
-<h1>Личный кабинет администратора:</h1>
+<h4>Личный кабинет администратора:</h4>
 <form method="post" th:action="@{/logout}">
   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 </form>
   <div style="display: flex; margin-top: 50px;" >
     <form style="margin-left: 10px" method="get" th:action="@{/admin/product/add}">
-      <button class="header-button" type="submit" style="color: white">Добавить товары</button>
+      <button type="submit" class="btn btn-primary">Добавить товары</button>
     </form>
     <form style="margin-left: 10px" method="get" th:action="@{/admin/infoProduct}">
-          <button class="header-button" type="submit" style="color: white">Товары</button>
+      <button type="submit" class="btn btn-primary">Товары</button>
     </form>
     <form style="margin-left: 10px" method="get" th:action="@{/admin/orders}">
-      <button class="header-button" type="submit" style="color: white">Заказы</button>
+      <button type="submit" class="btn btn-primary">Заказы</button>
     </form>
     <form style="margin-left: 10px" method="get" th:action="@{/admin/infoUsers}">
-      <button class="header-button" type="submit" style="color: white">Пользователи</button>
+      <button type="submit" class="btn btn-primary">Пользователи</button>
     </form>
 </div>
 </div>
-<footer>
+<footer style="height: 178px;">
   <div class="footerbox">
     <div class="footer-menu">
       <div>
         <img class="logofooter" th:src="@{/images/logofooter.png}">
       </div>
       <div class="right-menu-footer">
-        <ul>
-          <li><a href="https://example.com/about-us">О нас</a></li>
-          <li><a href="https://example.com/delivery">Доставка</a></li>
-          <li><a href="tel:123-456-7890">8-800-800-80-80</a></li>
-          <li><a href="https://example.com/mobile-app">Мобильное приложение</a></li>
+        <ul style="margin-bottom: 0;">
+          <li><a href="#">О нас</a></li>
+          <li><a href="#">Доставка</a></li>
+          <li><a href="#">8-800-800-80-80</a></li>
+          <li><a href="#">Мобильное приложение</a></li>
         </ul>
       </div>
     </div>
